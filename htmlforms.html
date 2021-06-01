@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h2>
+            Tekstisalaaja
+        </h2>
+        <form>
+            <table>
+                <tr>
+                    <td>
+                        Salattava teksti
+                    </td>
+                    <td>
+                        <input type="text" id="fname" name="fname" value="&nbsp"><br>
+                    </td>
+                </tr>            
+                <tr>
+                    <td>
+                        Salattu teksti
+                    </td>
+                    <td>
+                        <input type="text" id="fname" name="fname" value="&nbsp" readonly="readonly"><br>
+                    </td>
+                </tr>
+            </table>
+            <style type="text/css">
+                select, ul { height: 100px; overflow: auto; width: 100px; border: 1px solid #000; }
+                ul { list-style-type: none; margin: 0; padding: 0; overflow-x: hidden; }
+                li { margin: 0; padding: 0; }
+                label { display: block; color: WindowText; background-color: Window; margin: 0; padding: 0; width: 100%; }
+                label:hover { background-color: Highlight; color: HighlightText; }
+               </style>
+             <ul>
+                <li><label for="chk1"><input type="radio" name="chk1" id="chk1">First</label></li>
+                <li><label for="chk2"><input type="radio" name="chk2" id="chk2">Second</label></li>
+                <li><label for="chk3"><input type="radio" name="chk3" id="chk3">Third</label></li>
+                <li><label for="chk4"><input type="radio" name="chk4" id="chk4">Fourth</label></li>
+                <li><label for="chk5"><input type="radio" name="chk5" id="chk5">Fifth</label></li>
+                <li><label for="chk6"><input type="radio" name="chk6" id="chk6">Sixth</label></li>
+                <li><label for="chk7"><input type="radio" name="chk7" id="chk7">Seventh</label></li>
+               </ul>
+        </form>
+        <button>
+            Salaa teksti
+        </button>
+    </body>
+
+</html>
