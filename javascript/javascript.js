@@ -2,32 +2,41 @@
 //Käyttöliittymä
 //  Otsikot ✓
 //  Inputit ✓
-//  Outputit
+//  Outputit ✓
 //  Salaus valikointi ✓
 //  Key input ✓
 //  Salaa napit ✓
+
 //Salaus
+//  muunnetaan annettu string lowercase ✓
+// tehdään kirjain array ✓
+// loopataan annetun sanan pituudelta ✓
+//  etsitääm sanan kirjainta vastaava indexi taulukosta
+//  lisätään key indexiin
+//  jos indexi +  key on > array lenght tai < kuin array lenght korjataan takaisin scopeem
+//  jos ei, lisätään uutta indexiä vastaava kirjain returniin
 let decrypterKeyBoxCounter = ""
 let encrypterKeyBoxCounter = ""
 let decryptionMethod = document.getElementById("decryptionMethod");   
-let encryptionMethod = document.getElementById("encryptionMethod");
+let encryptionMethod = document.getElementById("encryptionMethod");    
+let encrypterFormTitle = "Bad Encrypter";
+let decrypterFormTitle = "Bad Decrypter";
 document.addEventListener("DOMContentLoaded",()=> {
-    Titles();
+    encryptionTitle(encrypterFormTitle);
+    decryptionTitle(decrypterFormTitle);
     CrypterTexts();
-    InputBoxes();
     CryptionMethod();
 })
 
 
 
-function Titles(){
-    let encrypterFormTitle = "Bad Encrypter";
-    let decrypterFormTitle = "Bad Decrypter";
+function encryptionTitle(title){
     let badEncrypter = document.getElementById("topTitle");
-    badEncrypter.innerHTML = encrypterFormTitle;
-
+    badEncrypter.innerHTML = title;
+}
+function decryptionTitle(title){
     let badDecrypter = document.getElementById("lowerTitle");
-    badDecrypter.innerHTML = decrypterFormTitle;
+    badDecrypter.innerHTML = title;
 }
 function CrypterTexts(){
     let encrypterInfoText = "Input";
@@ -78,7 +87,7 @@ function CryptionMethod(){
             tg.innerHTML = "<input id='encrypterKeyBox' type='number' name='fname'><br>";
             encrypterFormElement.appendChild(tg);
             var encrypterKeyBox = document.getElementById("encrypterKeyBox");
-            encrypterKeyBox.addEventListener("input", updateKeyInput);
+            //encrypterKeyBox.addEventListener("input", updateKeyInput);
             encrypterKeyBoxCounter = 1;
         }
     }
@@ -94,7 +103,7 @@ function CryptionMethod(){
             td.innerHTML = "<input id='decrypterKeyBox' type='number' name='fname'><br>"
             decrypterFormElement.appendChild(td)
             var decrypterKeyBox = document.getElementById("decrypterKeyBox");
-            decrypterKeyBox.addEventListener("input", updateKeyInput);   
+            //decrypterKeyBox.addEventListener("input", updateKeyInput);   
             decrypterKeyBoxCounter = 1
             
         }
@@ -102,16 +111,64 @@ function CryptionMethod(){
 }
 decryptionMethod.addEventListener("change",CryptionMethod)
 encryptionMethod.addEventListener("change",CryptionMethod)
-   
-  
-function updateKeyInput(){
-    console.log("juu")
-}
-function encryption() {
-    var encrypterInputBox = document.getElementById("encrypterInputBox").value;
-    document.getElementById("encryptedOutput").innerHTML = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + encrypterInputBox;
-}
-function decryption() {
-    var decrypterInputBox = document.getElementById("decrypterInputBox").value;
-    document.getElementById("decryptedOutput").innerHTML = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + decrypterInputBox;
-}
+
+function ceasarSaladEncryption() {
+    let completeWord = "";
+    let encrypterInputBox = document.getElementById("encrypterInputBox").value.toLowerCase();
+    encrypterInputBox = encrypterInputBox.replace(/\u00E5/g, '1');
+    encrypterInputBox = encrypterInputBox.replace(/\u00e4/g, '2');
+    encrypterInputBox = encrypterInputBox.replace(/\u00f6/g, '3');
+    let letterArray = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1", "2", "3"];
+    for(i = 0; i < encrypterInputBox.length; i++) {
+            let letterIndex = letterArray.indexOf(encrypterInputBox[i]);
+            let newIndex =letterIndex + parseInt(encrypterKeyBox.value);
+            let newWord = "";
+            if(newIndex > (letterArray.length-1)) {
+                newIndex = newIndex - letterArray.length;
+                newWord = letterArray[newIndex];
+            }
+            else if(newIndex < 0) {
+                newIndex = newIndex + letterArray.length;
+                newWord = letterArray[newIndex];
+            }
+            else{
+                newWord = letterArray[newIndex];
+            }
+            newWord = newWord.replace(/1/g, '\u00E5');
+            newWord = newWord.replace(/2/g, '\u00e4');
+            newWord = newWord.replace(/3/g, '\u00f6');
+            completeWord = completeWord + newWord;
+    }   
+    document.getElementById("encryptedOutput").innerHTML = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + completeWord;
+    encryptionTitle("The Best Encrypter")
+}     
+function ceasarSaladDecryption() {
+    let completeWord = "";
+    let decrypterInputBox = document.getElementById("decrypterInputBox").value.toLowerCase();
+    decrypterInputBox = decrypterInputBox.replace(/\u00E5/g, '1');
+    decrypterInputBox = decrypterInputBox.replace(/\u00e4/g, '2');
+    decrypterInputBox = decrypterInputBox.replace(/\u00f6/g, '3');
+    let letterArray = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1", "2", "3"];
+    for(i = 0; i < decrypterInputBox.length; i++) {
+            let letterIndex = letterArray.indexOf(decrypterInputBox[i]);
+            let newIndex =letterIndex - parseInt(decrypterKeyBox.value);
+            let newWord = "";
+            if(newIndex > (letterArray.length-1)) {
+                newIndex = newIndex + letterArray.length;
+                newWord = letterArray[newIndex];
+            }
+            else if(newIndex < 0) {
+                newIndex = newIndex + letterArray.length;
+                newWord = letterArray[newIndex];
+            }
+            else{
+                newWord = letterArray[newIndex];
+            }
+            newWord = newWord.replace(/1/g, '\u00E5');
+            newWord = newWord.replace(/2/g, '\u00e4');
+            newWord = newWord.replace(/3/g, '\u00f6');
+            completeWord = completeWord + newWord;
+    }   
+document.getElementById("decryptedOutput").innerHTML = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + completeWord;
+decryptionTitle("The Best Decrypter")
+}     
