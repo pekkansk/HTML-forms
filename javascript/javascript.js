@@ -128,24 +128,27 @@ function ceasarEncryption(Input, Key) {
     Input = Input.replace(/\u00f6/g, '3');
     let letterArray = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1", "2", "3"];
     for(i = 0; i < Input.length; i++) {
-            let letterIndex = letterArray.indexOf(Input[i]);
-            let newIndex =letterIndex + parseInt(Key);
-            let newWord = "";
-            if(newIndex > (letterArray.length-1)) {
-                newIndex = newIndex - letterArray.length;
-                newWord = letterArray[newIndex];
-            }
-            else if(newIndex < 0) {
-                newIndex = newIndex + letterArray.length;
-                newWord = letterArray[newIndex];
-            }
-            else{
-                newWord = letterArray[newIndex];
-            }
-            newWord = newWord.replace(/1/g, '\u00E5');
-            newWord = newWord.replace(/2/g, '\u00e4');
-            newWord = newWord.replace(/3/g, '\u00f6');
-            completeWord = completeWord + newWord;
+        if(parseInt(Key) > letterArray.length) {
+            Key = parseInt(Key) % letterArray.length;
+        }
+        let letterIndex = letterArray.indexOf(Input[i]);
+        let newIndex =letterIndex + parseInt(Key);
+        let newWord = "";
+        if(newIndex > (letterArray.length-1)) {
+            newIndex = newIndex - letterArray.length;
+            newWord = letterArray[newIndex];
+        }
+        else if(newIndex < 0) {
+            newIndex = newIndex + letterArray.length;
+            newWord = letterArray[newIndex];
+        }
+        else{
+            newWord = letterArray[newIndex];
+        }
+        newWord = newWord.replace(/1/g, '\u00E5');
+        newWord = newWord.replace(/2/g, '\u00e4');
+        newWord = newWord.replace(/3/g, '\u00f6');
+        completeWord = completeWord + newWord;
     }   
     encryptedOutput(completeWord)
 }     
@@ -164,24 +167,27 @@ function ceasardDecryption(Input, Key) {
     Input = Input.replace(/\u00f6/g, '3');
     let letterArray = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1", "2", "3"];
     for(i = 0; i < Input.length; i++) {
-            let letterIndex = letterArray.indexOf(Input[i]);
-            let newIndex =letterIndex - parseInt(Key);
-            let newWord = "";
-            if(newIndex > (letterArray.length-1)) {
-                newIndex = newIndex + letterArray.length;
-                newWord = letterArray[newIndex];
-            }
-            else if(newIndex < 0) {
-                newIndex = newIndex + letterArray.length;
-                newWord = letterArray[newIndex];
-            }
-            else{
-                newWord = letterArray[newIndex];
-            }
-            newWord = newWord.replace(/1/g, '\u00E5');
-            newWord = newWord.replace(/2/g, '\u00e4');
-            newWord = newWord.replace(/3/g, '\u00f6');
-            completeWord = completeWord + newWord;
+        if(parseInt(Key) > letterArray.length) {
+            Key = parseInt(Key) % letterArray.length;
+        }
+        let letterIndex = letterArray.indexOf(Input[i]);
+        let newIndex =letterIndex - parseInt(Key);
+        let newWord = "";
+        if(newIndex > (letterArray.length-1)) {
+            newIndex = newIndex + letterArray.length;
+            newWord = letterArray[newIndex];
+        }
+        else if(newIndex < 0) {
+            newIndex = newIndex + letterArray.length;
+            newWord = letterArray[newIndex];
+        }
+        else{
+            newWord = letterArray[newIndex];
+        }
+        newWord = newWord.replace(/1/g, '\u00E5');
+        newWord = newWord.replace(/2/g, '\u00e4');
+        newWord = newWord.replace(/3/g, '\u00f6');
+        completeWord = completeWord + newWord;
     }      
     decryptedOutput(completeWord)
 }   
