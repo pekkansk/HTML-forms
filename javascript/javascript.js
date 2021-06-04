@@ -98,7 +98,10 @@ function cryptionMethod() {
         encryptFunction = encryptionFunctions[encryptionIndex];
         let encrypterInputBox = document.getElementById("encrypterInputBox");
         let getInputBoxvalue = getInput();
-        let getKeyBoxValue = getKey();
+        getKeyBoxValue =  ""
+        if(encryptionIndex === 1) {
+            let getKeyBoxValue = getKey();
+        }
         var cryptedWord = encryptFunction(getInputBoxvalue,getKeyBoxValue)
         encryptedOutput(cryptedWord)
     })
@@ -119,7 +122,6 @@ function cryptionMethod() {
             encrypterKeyTexts();
             tg.innerHTML = "<input id='encrypterKeyBox' type='number' name='fname'><br>";
             encrypterFormElement.appendChild(tg);
-            var encrypterKeyBox = document.getElementById("encrypterKeyBox");
             encrypterKeyBoxCounter = 1;
         }
     }
@@ -147,7 +149,7 @@ function getInput() {
     return encrypterInputBox;
 }
 function getKey() {
-    encrypterKeyBox = encrypterKeyBox.value;
+    var encrypterKeyBox = document.getElementById("encrypterKeyBox").value;
     return encrypterKeyBox;
 }
   
