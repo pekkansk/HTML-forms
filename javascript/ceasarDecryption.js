@@ -1,4 +1,4 @@
-function ceasardDecryption(input, key) {
+function ceasarDecryption(input, key) {
     let completeWord = "";
     input = input.replace(/\u00E5/g, '1');
     input = input.replace(/\u00e4/g, '2');

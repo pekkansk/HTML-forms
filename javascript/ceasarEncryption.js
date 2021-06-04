@@ -1,4 +1,3 @@
-
 function ceasarEncryption(input, key) {
     let completeWord = "";
     input.toLowerCase()

@@ -21,17 +21,21 @@
 //  jos ei, lisätään uutta indexiä vastaava kirjain returniin
 var decrypterKeyBoxCounter = "";
 var encrypterKeyBoxCounter = "";
+
 var decryptionMethod = document.getElementById("decryptionMethod");   
-var encryptionMethod = document.getElementById("encryptionMethod");    
+var encryptionMethod = document.getElementById("encryptionMethod");  
+
 var encrypterFormTitle = "Bad Encrypter";
 var decrypterFormTitle = "Bad Decrypter";
-var encryptButton = document.getElementById("encryptButton");
 
+var encryptButton = document.getElementById("encryptButton");
 var decryptButton = document.getElementById("decryptButton");
-decryptButton.addEventListener("click",runDecryptCeasarSalad);
+
 var algorithms = ["String Reverse","Ceasar",];
+var algorithmsWithKey = ["Ceasar",];
 var encryptionFunctions = [stringReverseEncryption,ceasarEncryption];
-//var decryptionFunctions = [stringReverseDecryption,ceasarDecryption];
+var decryptionFunctions = [stringReverseDecryption,ceasarDecryption];
+
 var decryptionMethod = document.getElementById("decryptionMethod");
 var encryptionMethod = document.getElementById("encryptionMethod");
 decryptionMethod.addEventListener("change",cryptionMethod);
@@ -50,16 +54,42 @@ encryptButton.addEventListener("click",()=> {
     let encryptionIndex = algorithms.indexOf(encryptionMethod.value)
     encryptFunction = encryptionFunctions[encryptionIndex];
     let encrypterInputBox = document.getElementById("encrypterInputBox");
-    let getInputBoxvalue = getInput();
-    if(encryptionIndex == 1) {
-        let getKeyBoxValue = getKey();
-        var cryptedWord = encryptFunction(getInputBoxvalue,getKeyBoxValue)
-    }
-    else {
-        var cryptedWord = encryptFunction(getInputBoxvalue)
-    }
-    
-    encryptedOutput(cryptedWord)
+    let getInputBoxvalue = getEncrypterInput();
+    for(o = 0; o < algorithmsWithKey.length; o++){
+        if(algorithmsWithKey[o] == encryptionMethod.value) {
+            let getKeyBoxValue = getEncrypterKey();
+            var cryptedWord = encryptFunction(getInputBoxvalue,getKeyBoxValue);
+            encryptedOutput(cryptedWord);
+            break
+        }
+        else if(algorithmsWithKey[o] != decryptionMethod.value){
+            var cryptedWord = encryptFunction(getInputBoxvalue);
+            encryptedOutput(cryptedWord);
+            break
+        }
+        else break
+    }  
+})
+decryptButton.addEventListener("click",()=> {
+    let decryptionIndex = algorithms.indexOf(decryptionMethod.value)
+    decryptFunction = decryptionFunctions[decryptionIndex];
+    let decrypterInputBox = document.getElementById("decrypterInputBox");
+    let getInputBoxvalue = getDecrypterInput();
+    for(o = 0; o < algorithmsWithKey.length; o++){
+        if(algorithmsWithKey[o] == decryptionMethod.value) {
+            let getKeyBoxValue = getDecrypterKey();
+            var decryptedword = decryptFunction(getInputBoxvalue,getKeyBoxValue);
+            decryptedOutput(decryptedword);
+            break
+        }
+        else if(algorithmsWithKey[o] != decryptionMethod.value){
+            var decryptedword = decryptFunction(getInputBoxvalue);
+            decryptedOutput(decryptedword);
+            break
+        }
+        else break
+    }    
+
 })
 function encryptioOptions() {
     for(j = 0; j < algorithms.length; j++) {
@@ -119,11 +149,13 @@ function cryptionMethod() {
         encrypterKeyBoxCounter = 0;
     }
     if(encrypterKeyBoxCounter == 0) {
-        if(encryptionMethod.options[selectedEncryptionMethod].text === algorithms[1]) {
-            encrypterKeyTexts();
-            tg.innerHTML = "<input id='encrypterKeyBox' type='number' name='fname'><br>";
-            encrypterFormElement.appendChild(tg);
-            encrypterKeyBoxCounter = 1;
+        for(o = 0; o < algorithmsWithKey.length; o++){
+            if(encryptionMethod.options[selectedEncryptionMethod].text == algorithmsWithKey[o]) {
+                encrypterKeyTexts();
+                tg.innerHTML = "<input id='encrypterKeyBox' type='number' name='fname'><br>";
+                encrypterFormElement.appendChild(tg);
+                encrypterKeyBoxCounter = 1;
+            }
         }
     }
     let selectedDecryptionMethod = decryptionMethod.selectedIndex;
@@ -133,35 +165,40 @@ function cryptionMethod() {
         decrypterKeyBoxCounter = 0;
     }
     if(decrypterKeyBoxCounter == 0 ) {
-        if(decryptionMethod.options[selectedDecryptionMethod].text === algorithms[1]) {
-            decrypterKeyTexts()
-            td.innerHTML = "<input id='decrypterKeyBox' type='number' name='fname'><br>";
-            decrypterFormElement.appendChild(td);
-            var decrypterKeyBox = document.getElementById("decrypterKeyBox"); 
-            decrypterKeyBoxCounter = 1
-            
+        for(o = 0; o < algorithmsWithKey.length; o++){
+            if(decryptionMethod.options[selectedDecryptionMethod].text == algorithmsWithKey[o]) {
+                decrypterKeyTexts()
+                td.innerHTML = "<input id='decrypterKeyBox' type='number' name='fname'><br>";
+                decrypterFormElement.appendChild(td);
+                var decrypterKeyBox = document.getElementById("decrypterKeyBox"); 
+                decrypterKeyBoxCounter = 1;
+            }
         }
     }
 }
 
 
-function getInput() {
+function getEncrypterInput() {
     let encrypterInputBox = document.getElementById("encrypterInputBox").value;
     return encrypterInputBox;
 }
-function getKey() {
+function getEncrypterKey() {
     var encrypterKeyBox = document.getElementById("encrypterKeyBox").value;
     return encrypterKeyBox;
 }
+function getDecrypterInput() {
+    let decrypterInputBox = document.getElementById("decrypterInputBox").value;
+    return decrypterInputBox;
+}
+function getDecrypterKey() {
+    var decrypterKeyBox = document.getElementById("decrypterKeyBox").value;
+    return decrypterKeyBox;
+}
+  
   
 function encryptedOutput(cryptedWord) {
     document.getElementById("encryptedOutput").innerHTML = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + cryptedWord;
     encryptionTitle("The Best Encrypter")
-}
-function runDecryptCeasarSalad() {
-    let decrypterInputBox = document.getElementById("decrypterInputBox").value.toLowerCase();
-    let decryptedData = ceasardDecryption(decrypterInputBox,decrypterKeyBox.value);
-    decryptedOutput(decryptedData);
 }
 
 function decryptedOutput(decryptedword) {
