@@ -1,5 +1,6 @@
 function ceasarDecryption(input, key) {
     let completeWord = "";
+    input.toLowerCase();
     input = input.replace(/\u00E5/g, '1');
     input = input.replace(/\u00e4/g, '2');
     input = input.replace(/\u00f6/g, '3');
