@@ -46,7 +46,21 @@ document.addEventListener("DOMContentLoaded",()=> {
     crypterTexts();
     cryptionMethod();
 })
-
+encryptButton.addEventListener("click",()=> {
+    let encryptionIndex = algorithms.indexOf(encryptionMethod.value)
+    encryptFunction = encryptionFunctions[encryptionIndex];
+    let encrypterInputBox = document.getElementById("encrypterInputBox");
+    let getInputBoxvalue = getInput();
+    if(encryptionIndex == 1) {
+        let getKeyBoxValue = getKey();
+        var cryptedWord = encryptFunction(getInputBoxvalue,getKeyBoxValue)
+    }
+    else {
+        var cryptedWord = encryptFunction(getInputBoxvalue)
+    }
+    
+    encryptedOutput(cryptedWord)
+})
 function encryptioOptions() {
     for(j = 0; j < algorithms.length; j++) {
         let option = document.createElement("option");
@@ -92,20 +106,7 @@ function decrypterKeyTexts(){
 }
 
 function cryptionMethod() {
-    encryptButton.addEventListener("click",()=> {
-        let encryptionIndex = algorithms.indexOf(encryptionMethod.value)
-        console.log(encryptionIndex);
-        encryptFunction = encryptionFunctions[encryptionIndex];
-        let encrypterInputBox = document.getElementById("encrypterInputBox");
-        let getInputBoxvalue = getInput();
-        getKeyBoxValue =  ""
-        if(encryptionIndex === 1) {
-            let getKeyBoxValue = getKey();
-        }
-        var cryptedWord = encryptFunction(getInputBoxvalue,getKeyBoxValue)
-        encryptedOutput(cryptedWord)
-    })
-    
+
     let decrypterFormElement = document.getElementById("decrypterFormElement");
     let encrypterFormElement = document.getElementById("encrypterFormElement");
 
